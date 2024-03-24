@@ -1,15 +1,15 @@
-version: '3.8'
+version: "3.8"
 services:
   api:
     build:
       context: ./
       dockerfile: Dockerfile
-    command: python main.py 
+    command: python main.py
     volumes:
-      - ${DROPBOX_LOCAL_FOLDER_PATH}:/usr/local/documents:ro 
+      - ${DROPBOX_LOCAL_FOLDER_PATH}:/usr/local/documents:ro
     env_file:
       - .env
-    ports: 
+    ports:
       - 8080:8080
     networks:
       - app_network
@@ -18,15 +18,15 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
-    command: streamlit run ui.py  
+    command: streamlit run ui.py
     env_file:
       - .env
-    ports: 
-      - 8501:8501
+    ports:
+      - 8051:8051
     networks:
       - app_network
     depends_on:
-      - api   
+      - api
 
 networks:
   app_network:

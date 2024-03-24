@@ -5,9 +5,12 @@ from common.embedder import embeddings, index_embeddings
 from common.prompt import prompt
 from pathway.xpacks.llm.parsers import ParseUnstructured
 from pathway.xpacks.llm.splitters import TokenCountSplitter
+
 load_dotenv()
 
-dropbox_folder_path = os.environ.get("DROPBOX_LOCAL_FOLDER_PATH", "/usr/local/documents")
+dropbox_folder_path = os.environ.get(
+    "DROPBOX_LOCAL_FOLDER_PATH", "/usr/local/documents"
+)
 
 
 def run(host, port):
@@ -17,6 +20,7 @@ def run(host, port):
         port=port,
         schema=QueryInputSchema,
         autocommit_duration_ms=50,
+        delete_completed_queries=True,
     )
 
     # Real-time data coming from external unstructured data sources like a PDF file
@@ -26,7 +30,7 @@ def run(host, port):
         format="binary",
         autocommit_duration_ms=50,
     )
-    
+
     # Chunk input data into smaller documents
     parser = ParseUnstructured()
     documents = input_data.select(texts=parser(pw.this.data))
